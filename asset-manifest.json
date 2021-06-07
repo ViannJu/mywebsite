@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/Grupo17/static/css/main.41647186.chunk.css",
-    "main.js": "/Grupo17/static/js/main.d866b87a.chunk.js",
-    "main.js.map": "/Grupo17/static/js/main.d866b87a.chunk.js.map",
-    "runtime-main.js": "/Grupo17/static/js/runtime-main.46f149a8.js",
-    "runtime-main.js.map": "/Grupo17/static/js/runtime-main.46f149a8.js.map",
-    "static/js/2.09892392.chunk.js": "/Grupo17/static/js/2.09892392.chunk.js",
-    "static/js/2.09892392.chunk.js.map": "/Grupo17/static/js/2.09892392.chunk.js.map",
-    "static/js/3.b44e3da9.chunk.js": "/Grupo17/static/js/3.b44e3da9.chunk.js",
-    "static/js/3.b44e3da9.chunk.js.map": "/Grupo17/static/js/3.b44e3da9.chunk.js.map",
-    "index.html": "/Grupo17/index.html",
-    "static/css/main.41647186.chunk.css.map": "/Grupo17/static/css/main.41647186.chunk.css.map",
-    "static/js/2.09892392.chunk.js.LICENSE.txt": "/Grupo17/static/js/2.09892392.chunk.js.LICENSE.txt",
-    "static/media/logo.6ce24c58.svg": "/Grupo17/static/media/logo.6ce24c58.svg"
+    "main.css": "/www/Grupo17/static/css/main.41647186.chunk.css",
+    "main.js": "/www/Grupo17/static/js/main.75424474.chunk.js",
+    "main.js.map": "/www/Grupo17/static/js/main.75424474.chunk.js.map",
+    "runtime-main.js": "/www/Grupo17/static/js/runtime-main.e328fcab.js",
+    "runtime-main.js.map": "/www/Grupo17/static/js/runtime-main.e328fcab.js.map",
+    "static/js/2.aa786b62.chunk.js": "/www/Grupo17/static/js/2.aa786b62.chunk.js",
+    "static/js/2.aa786b62.chunk.js.map": "/www/Grupo17/static/js/2.aa786b62.chunk.js.map",
+    "static/js/3.b44e3da9.chunk.js": "/www/Grupo17/static/js/3.b44e3da9.chunk.js",
+    "static/js/3.b44e3da9.chunk.js.map": "/www/Grupo17/static/js/3.b44e3da9.chunk.js.map",
+    "index.html": "/www/Grupo17/index.html",
+    "static/css/main.41647186.chunk.css.map": "/www/Grupo17/static/css/main.41647186.chunk.css.map",
+    "static/js/2.aa786b62.chunk.js.LICENSE.txt": "/www/Grupo17/static/js/2.aa786b62.chunk.js.LICENSE.txt",
+    "static/media/logo.6ce24c58.svg": "/www/Grupo17/static/media/logo.6ce24c58.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.46f149a8.js",
-    "static/js/2.09892392.chunk.js",
+    "static/js/runtime-main.e328fcab.js",
+    "static/js/2.aa786b62.chunk.js",
     "static/css/main.41647186.chunk.css",
-    "static/js/main.d866b87a.chunk.js"
+    "static/js/main.75424474.chunk.js"
   ]
 }
