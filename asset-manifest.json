@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/mywebsite/static/css/main.e5a59a86.chunk.css",
-    "main.js": "/mywebsite/static/js/main.eaf255d1.chunk.js",
-    "main.js.map": "/mywebsite/static/js/main.eaf255d1.chunk.js.map",
-    "runtime-main.js": "/mywebsite/static/js/runtime-main.12c67d41.js",
-    "runtime-main.js.map": "/mywebsite/static/js/runtime-main.12c67d41.js.map",
-    "static/js/2.607f2b15.chunk.js": "/mywebsite/static/js/2.607f2b15.chunk.js",
-    "static/js/2.607f2b15.chunk.js.map": "/mywebsite/static/js/2.607f2b15.chunk.js.map",
-    "static/js/3.cb11dfb6.chunk.js": "/mywebsite/static/js/3.cb11dfb6.chunk.js",
-    "static/js/3.cb11dfb6.chunk.js.map": "/mywebsite/static/js/3.cb11dfb6.chunk.js.map",
-    "index.html": "/mywebsite/index.html",
-    "static/css/main.e5a59a86.chunk.css.map": "/mywebsite/static/css/main.e5a59a86.chunk.css.map",
-    "static/js/2.607f2b15.chunk.js.LICENSE.txt": "/mywebsite/static/js/2.607f2b15.chunk.js.LICENSE.txt",
-    "static/media/logo.6ce24c58.svg": "/mywebsite/static/media/logo.6ce24c58.svg"
+    "main.css": "/www/Grupo17/static/css/main.41647186.chunk.css",
+    "main.js": "/www/Grupo17/static/js/main.04a4e67d.chunk.js",
+    "main.js.map": "/www/Grupo17/static/js/main.04a4e67d.chunk.js.map",
+    "runtime-main.js": "/www/Grupo17/static/js/runtime-main.e328fcab.js",
+    "runtime-main.js.map": "/www/Grupo17/static/js/runtime-main.e328fcab.js.map",
+    "static/js/2.aa786b62.chunk.js": "/www/Grupo17/static/js/2.aa786b62.chunk.js",
+    "static/js/2.aa786b62.chunk.js.map": "/www/Grupo17/static/js/2.aa786b62.chunk.js.map",
+    "static/js/3.b44e3da9.chunk.js": "/www/Grupo17/static/js/3.b44e3da9.chunk.js",
+    "static/js/3.b44e3da9.chunk.js.map": "/www/Grupo17/static/js/3.b44e3da9.chunk.js.map",
+    "index.html": "/www/Grupo17/index.html",
+    "static/css/main.41647186.chunk.css.map": "/www/Grupo17/static/css/main.41647186.chunk.css.map",
+    "static/js/2.aa786b62.chunk.js.LICENSE.txt": "/www/Grupo17/static/js/2.aa786b62.chunk.js.LICENSE.txt",
+    "static/media/logo.6ce24c58.svg": "/www/Grupo17/static/media/logo.6ce24c58.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.12c67d41.js",
-    "static/js/2.607f2b15.chunk.js",
-    "static/css/main.e5a59a86.chunk.css",
-    "static/js/main.eaf255d1.chunk.js"
+    "static/js/runtime-main.e328fcab.js",
+    "static/js/2.aa786b62.chunk.js",
+    "static/css/main.41647186.chunk.css",
+    "static/js/main.04a4e67d.chunk.js"
   ]
 }
