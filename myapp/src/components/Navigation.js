@@ -216,17 +216,17 @@ class Navigation extends React.Component{
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item">
-                        <Link className="nav-link" style={ { textDecoration: 'none' } } to= {{ pathname: "/mywebsite/reporte", datosCST:this.state.datosCST, datosCSTXML:this.state.datosCSTXML, datosAST:this.state.AST ,graphviz:this.state.graphvizCST }}>
+                        <Link className="nav-link" style={ { textDecoration: 'none' } } to= {{ pathname: "/tytusx/20211SVAC/G17/reporte", datosCST:this.state.datosCST, datosCSTXML:this.state.datosCSTXML, datosAST:this.state.AST ,graphviz:this.state.graphvizCST }}>
                             Reportes
                         </Link>                        
                     </li>                
                     <li className="nav-item">
-                        <Link className="nav-link" style={ { textDecoration: 'none' } } to= {{ pathname: "/mywebsite/reporteErrores", Mistakes:this.state.Mistakes }}>
+                        <Link className="nav-link" style={ { textDecoration: 'none' } } to= {{ pathname: "/tytusx/20211SVAC/G17/reporteErrores", Mistakes:this.state.Mistakes }}>
                             Errores
                         </Link>                        
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link" style={ { textDecoration: 'none' } } to= {{ pathname: "/mywebsite/reporteTabla", XML:this.state.XML }}>
+                        <Link className="nav-link" style={ { textDecoration: 'none' } } to= {{ pathname: "/tytusx/20211SVAC/G17/reporteTabla", XML:this.state.XML }}>
                             Tabla Simbolos
                         </Link>                         
                     </li>
