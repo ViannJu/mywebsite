@@ -356,6 +356,6 @@ ContextItemExpr
 ;
 
 ParenthesizedExpr 
-  : PARENTESISA PARENTESISC       { $$=$1+$2; grafo.generarHijos($1,$2) }
-	| PARENTESISA Expr PARENTESISC  { $$=$1+$3; grafo.generarHijos($1,$2,$3) }
+  : PARENTESISA PARENTESISC             { $$=[]; grafo.generarHijos($1,$2) }
+	| PARENTESISA ExprSingle PARENTESISC  { $$=$2; grafo.generarHijos($1,$2,$3) }
 ;	

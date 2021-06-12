@@ -322,10 +322,10 @@ Predicate
 ;
 
 PrimaryExpr 
-  : Literal                                 { $$ = $1; grafo.generarHijos("Literal");}
-	| FunctionCall                            { $$ = $1; grafo.generarHijos("FunctionCall");}
-	| ContextItemExpr                         { $$ = $1; grafo.generarHijos("ContextItemExpr");}
-	| ParenthesizedExpr                       { $$ = $1; grafo.generarHijos("ParenthesizedExpr");}
+  : Literal                                 { $$ = $1; grafo.generarPadre(1); grafo.generarHijos("Literal");}
+	| FunctionCall                            { $$ = $1; grafo.generarPadre(1); grafo.generarHijos("FunctionCall");}
+	| ContextItemExpr                         { $$ = $1; grafo.generarPadre(1); grafo.generarHijos("ContextItemExpr");}
+	| ParenthesizedExpr                       { $$ = $1; grafo.generarPadre(1); grafo.generarHijos("ParenthesizedExpr");}
 ;
 
 Literal     
@@ -343,6 +343,9 @@ ContextItemExpr
     : PUNTO                                 { $$=new ContextItemExpr([],TipoPath.ABS); grafo.generarHijos($1); }
 ;
 
-
+ParenthesizedExpr 
+  : PARENTESISA PARENTESISC             { $$=[]; grafo.generarHijos($1,$2) }
+	| PARENTESISA ExprSingle PARENTESISC  { $$=$2; grafo.generarHijos($1,$2,$3) }
+;	
 
 
