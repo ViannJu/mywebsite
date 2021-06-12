@@ -71,7 +71,7 @@
     recoverable: (boolean: TRUE when the parser has a error recovery rule available for this particular error)
   }
 */
-var XPath = (function(){
+var xpath = (function(){
 var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,12],$V1=[1,13],$V2=[1,14],$V3=[1,15],$V4=[1,43],$V5=[1,45],$V6=[1,46],$V7=[1,47],$V8=[1,48],$V9=[1,49],$Va=[1,50],$Vb=[1,51],$Vc=[1,52],$Vd=[1,34],$Ve=[1,54],$Vf=[1,37],$Vg=[1,38],$Vh=[1,39],$Vi=[1,40],$Vj=[1,41],$Vk=[1,42],$Vl=[1,31],$Vm=[1,32],$Vn=[1,33],$Vo=[1,36],$Vp=[1,35],$Vq=[1,55],$Vr=[1,56],$Vs=[1,6,75],$Vt=[1,6,9,66,75],$Vu=[1,58],$Vv=[1,6,9,11,66,75],$Vw=[1,60],$Vx=[1,61],$Vy=[1,6,9,11,14,15,16,17,18,19,21,22,66,75],$Vz=[1,68],$VA=[1,69],$VB=[1,70],$VC=[1,71],$VD=[1,6,9,11,14,15,16,17,18,19,21,22,24,25,26,27,66,75],$VE=[1,76],$VF=[1,77],$VG=[1,6,9,11,14,15,16,17,18,19,21,22,24,25,26,27,29,31,66,75],$VH=[1,80],$VI=[1,6,9,11,14,15,16,17,18,19,21,22,24,25,26,27,29,31,65,66,75],$VJ=[1,84],$VK=[2,59],$VL=[21,22,29,31,42,43,45,46,47,48,49,50,51,53,55,58,59,60,61,62,63,71,72,73,74,76],$VM=[53,55];
 var parser = {trace: function trace () { },
 yy: {},
@@ -170,6 +170,9 @@ case 25: case 26: case 27:
 break;
 case 28:
  this.$=$$[$0]; grafo.generarPadre(1);grafo.generarHijos("PathExpr") 
+break;
+case 29: case 30:
+ this.$=new Unary($$[$0-1], $$[$0]); grafo.generarPadre(2);grafo.generarHijos($$[$0-1],"UnaryExp")
 break;
 case 31:
  $$[$0][0].tipo=TipoPath.ABS;this.$=new PathExp($$[$0]); grafo.generarPadre(2);grafo.generarHijos($$[$0-1],"RelativePathExpr") 
@@ -575,7 +578,7 @@ _handle_error:
 
   const {Tipo,TipoPath,Comando} = require("./AST/Entorno");
   const {Logical} = require("./Expresion/Logical");
-  const {Arithmetic} = require("./Expresion/Arithmetics")
+  const {Arithmetic, Unary} = require("./Expresion/Arithmetics")
   const {Literal,PathExp} = require("./Expresion/Expresiones");
   const { ComparisonExp } = require('./Expresion/Comparison')
   const { Atributo,Camino,Child,Descendant,Attribute,Self,DescSelf,FollowSibling,Follow } = require('./Expresion/axes')
@@ -1055,9 +1058,9 @@ return new Parser;
 
 
 if (typeof require !== 'undefined' && typeof exports !== 'undefined') {
-exports.parser = XPath;
-exports.Parser = XPath.Parser;
-exports.parse = function () { return XPath.parse.apply(XPath, arguments); };
+exports.parser = xpath;
+exports.Parser = xpath.Parser;
+exports.parse = function () { return xpath.parse.apply(xpath, arguments); };
 exports.main = function commonjsMain (args) {
     if (!args[1]) {
         console.log('Usage: '+args[0]+' FILE');
