@@ -71,7 +71,7 @@
     recoverable: (boolean: TRUE when the parser has a error recovery rule available for this particular error)
   }
 */
-var XPathDesc = (function(){
+var XpathDesc = (function(){
 var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,12],$V1=[1,13],$V2=[1,14],$V3=[1,15],$V4=[1,36],$V5=[1,38],$V6=[1,39],$V7=[1,40],$V8=[1,41],$V9=[1,42],$Va=[1,43],$Vb=[1,44],$Vc=[1,45],$Vd=[1,34],$Ve=[1,53],$Vf=[1,46],$Vg=[1,47],$Vh=[1,48],$Vi=[1,49],$Vj=[1,50],$Vk=[1,51],$Vl=[1,26],$Vm=[1,31],$Vn=[1,32],$Vo=[1,33],$Vp=[1,35],$Vq=[2,6],$Vr=[1,56],$Vs=[1,2,7,76],$Vt=[2,11],$Vu=[1,58],$Vv=[1,2,7,11,76],$Vw=[2,14],$Vx=[1,60],$Vy=[1,2,7,11,14,76],$Vz=[1,2,7,11,14,18,19,20,21,22,23,76],$VA=[2,27],$VB=[1,70],$VC=[1,71],$VD=[1,2,7,11,14,18,19,20,21,22,23,26,27,76],$VE=[2,33],$VF=[1,73],$VG=[1,74],$VH=[1,75],$VI=[1,76],$VJ=[1,2,7,11,14,18,19,20,21,22,23,26,27,30,31,32,33,76],$VK=[2,45],$VL=[1,83],$VM=[1,84],$VN=[1,2,7,11,14,18,19,20,21,22,23,26,27,30,31,32,33,35,37,76],$VO=[2,51],$VP=[1,88],$VQ=[1,2,7,11,14,18,19,20,21,22,23,26,27,30,31,32,33,35,37,75,76],$VR=[1,92],$VS=[2,68],$VT=[26,27,35,37,52,53,55,56,57,58,59,60,61,63,65,68,69,70,71,72,73,80,81,82,83,86],$VU=[2,54],$VV=[63,65];
 var parser = {trace: function trace () { },
 yy: {},
@@ -173,8 +173,8 @@ break;
 case 34:
  this.$ = $$[$0]; grafo.generarPadre(1); grafo.generarHijos("PathExpr"); 
 break;
-case 35: case 36: case 66:
-  
+case 35: case 36:
+ this.$=new Unary($$[$0-1], $$[$0]); grafo.generarPadre(2);grafo.generarHijos($$[$0-1],"UnaryExp") 
 break;
 case 37:
  this.$ = $$[$0]; grafo.generarPadre(2); grafo.generarHijos($$[$0-1], "SUB_BARRA"); 
@@ -258,6 +258,9 @@ case 64:
 break;
 case 65:
  this.$=new Follow(null,[],TipoPath.ABS); grafo.generarHijos($$[$0-1],$$[$0]); 
+break;
+case 66:
+  
 break;
 case 67:
  this.$ = $$[$0]; grafo.generarPadre(1); grafo.generarHijos("NameTest"); 
@@ -577,7 +580,7 @@ _handle_error:
 
   const {Tipo,TipoPath,Comando} = require("./AST/Entorno");
   const {Logical} = require("./Expresion/Logical");
-  const {Arithmetic} = require("./Expresion/Arithmetics")
+  const {Arithmetic, Unary} = require("./Expresion/Arithmetics")
   const {Literal,PathExp} = require("./Expresion/Expresiones");
   const { ComparisonExp } = require('./Expresion/Comparison')
   const { Atributo,Camino,Child,Descendant,Attribute,Self,DescSelf,FollowSibling,Follow } = require('./Expresion/axes')
@@ -1057,9 +1060,9 @@ return new Parser;
 
 
 if (typeof require !== 'undefined' && typeof exports !== 'undefined') {
-exports.parser = XPathDesc;
-exports.Parser = XPathDesc.Parser;
-exports.parse = function () { return XPathDesc.parse.apply(XPathDesc, arguments); };
+exports.parser = XpathDesc;
+exports.Parser = XpathDesc.Parser;
+exports.parse = function () { return XpathDesc.parse.apply(XpathDesc, arguments); };
 exports.main = function commonjsMain (args) {
     if (!args[1]) {
         console.log('Usage: '+args[0]+' FILE');
