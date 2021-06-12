@@ -85,7 +85,7 @@ class TablaSimbolos extends React.Component{
 
                 <div className="col-2 block">
                     <div className ="row">
-                        <Link to= {{ pathname: "/mywebsite", XML:this.XML }}>
+                        <Link to= {{ pathname: "/tytusx/20211SVAC/G17", XML:this.XML }}>
                             <button type="button" className="btn btn-primary btn-lg">Atrás</button>
                         </Link>
                     </div>

@@ -13,10 +13,10 @@ const Routes = () => {
             <Route exact path = "/tytusx/20211SVAC/G17/reporte" component={Reporte}/>
             <Route exact path = "/tytusx/20211SVAC/G17/reporteTabla" component={TablaSimbolos}/>
             <Route exact path = "/tytusx/20211SVAC/G17/reporteErrores" component={TablaErrores}/>
-            <Route exact path = "/mywebsite" component={Navigation}/>
+            {/* <Route exact path = "/mywebsite" component={Navigation}/>
             <Route exact path = "/mywebsite/reporte" component={Reporte}/>
             <Route exact path = "/mywebsite/reporteTabla" component={TablaSimbolos}/>
-            <Route exact path = "/mywebsite/reporteErrores" component={TablaErrores}/>
+            <Route exact path = "/mywebsite/reporteErrores" component={TablaErrores}/> */}
         </Switch>
     );
 }

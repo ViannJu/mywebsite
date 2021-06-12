@@ -27,7 +27,7 @@ class TablaErrores extends React.Component{
 
                 <div className="col-2 block">
                     <div className ="row">
-                        <Link to= {{ pathname: "/mywebsite" }}>
+                        <Link to= {{ pathname: "/tytusx/20211SVAC/G17" }}>
                             <button type="button" className="btn btn-primary btn-lg">Atrás</button>
                         </Link>
                     </div>
