@@ -1,7 +1,12 @@
 import logo from '../logo.svg';
 import { Link } from 'react-router-dom'
 import React from 'react';
-import { toPlainObject } from 'lodash';
+import { parse as parseXPath } from '../code/analizadorXPath/Xpath'
+
+//const XPath = require('../code/analizadorXPath/Xpath')
+const XPathDesc = require('../code/analizadorXPath/XpathDesc')
+const grammar = require('../code/analizadorXML/grammar')
+const grammarDesc = require('../code/analizadorXMLDesc/grammarDesc')
 
 
 class Navigation extends React.Component{
@@ -77,8 +82,7 @@ class Navigation extends React.Component{
         console.log("setText Button clicked");
         let text = this.state.InputTextarea;
         if(text=="") return
-        var parser = require('../code/analizadorXPath/Xpath');
-        var funcion = parser.parse(text);
+        var funcion = parseXPath(text);
         if(funcion.errores.length > 0)
         {
             alert("Se detectaron errores en la entrada :( Xpath")
@@ -98,8 +102,7 @@ class Navigation extends React.Component{
         console.log("setTextDesc Button clicked");
         let text = this.state.InputTextarea;
         if(text=="") return
-        var parser = require('../code/analizadorXPath/XpathDesc');
-        var funcion = parser.parse(text);
+        var funcion = XPathDesc.parse(text);
         if(funcion.errores.length > 0)
         {
             alert("Se detectaron errores en la entrada :( Xpath")
@@ -117,8 +120,7 @@ class Navigation extends React.Component{
 
     xmlDesc(){
         var x = this.state.XMLTextarea;
-        var analizadorXMLDesc = require('../code/analizadorXMLDesc/analizadorXMLDesc');
-        var resultado = analizadorXMLDesc.Ejecutar(x);
+        var resultado = grammarDesc.parse(x);
         if(resultado.errores.length>0)
         {
             alert("Errores en el analisis del XML")
@@ -133,8 +135,7 @@ class Navigation extends React.Component{
     
     actualizar(){
         var x = this.state.XMLTextarea;
-        var analizadorXML = require('../code/analizadorXML/analizadorXML');
-        var resultado = analizadorXML.Ejecutar(x);
+        var resultado = grammar.parse(x)
         if(resultado.errores.length>0)
         {
             alert("Errores en el analisis del XML")
@@ -174,8 +175,7 @@ class Navigation extends React.Component{
         console.log(content);
         this.setState({XMLTextarea: content});
         if(content=="") return
-        var analizadorXML = require('../code/analizadorXML/analizadorXML')
-        var resultado = analizadorXML.Ejecutar(content)
+        var resultado = grammar.parse(content)
         if(resultado.errores.length>0)
         {
             alert("Errores en el analisis del XML")
@@ -187,8 +187,7 @@ class Navigation extends React.Component{
 
     handleFocus = (e) =>{
         if(e.target.value=="") return
-        var analizadorXML = require('../code/analizadorXML/analizadorXML')
-        var resultado = analizadorXML.Ejecutar(e.target.value)        
+        var resultado = grammar.parse(e.target.value)        
         console.log(resultado)
         if(resultado.errores.length>0)
         {
