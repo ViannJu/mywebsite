@@ -78,8 +78,6 @@ class Navigation extends React.Component{
 
     }
 
-    
-
     setText(){
         console.log("setText Button clicked");
         let text = this.state.InputTextarea;
@@ -133,8 +131,7 @@ class Navigation extends React.Component{
         this.setState({datosCSTXML:{nodes:resultado.nodes,edges:resultado.edges}})
         this.setState({Mistakes: resultado.errores})
     }
-
-    
+ 
     actualizar(){
         var x = this.state.XMLTextarea;
         var resultado = grammar.parse(x)
@@ -188,6 +185,7 @@ class Navigation extends React.Component{
         this.setState({XMLTextarea: content});
         if(content=="") return
         var resultado = grammar.parse(content)
+        console.log(resultado)
         if(resultado.errores.length>0)
         {
             alert("Errores en el analisis del XML")
@@ -215,21 +213,21 @@ class Navigation extends React.Component{
         return(
             //tag principal
             <header className="App-header">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item">
-                        <Link style={ { textDecoration: 'none' } } to= {{ pathname: "/mywebsite/reporte", datosCST:this.state.datosCST, datosCSTXML:this.state.datosCSTXML, datosAST:this.state.AST ,graphviz:this.state.graphvizCST }}>
-                            <a className="nav-link">Reportes</a>
+                        <Link className="nav-link" style={ { textDecoration: 'none' } } to= {{ pathname: "/mywebsite/reporte", datosCST:this.state.datosCST, datosCSTXML:this.state.datosCSTXML, datosAST:this.state.AST ,graphviz:this.state.graphvizCST }}>
+                            Reportes
                         </Link>                        
                     </li>                
                     <li className="nav-item">
-                        <Link style={ { textDecoration: 'none' } } to= {{ pathname: "/mywebsite/reporteErrores", Mistakes:this.state.Mistakes }}>
-                            <a className="nav-link">Errores</a>
+                        <Link className="nav-link" style={ { textDecoration: 'none' } } to= {{ pathname: "/mywebsite/reporteErrores", Mistakes:this.state.Mistakes }}>
+                            Errores
                         </Link>                        
                     </li>
                     <li className="nav-item">
-                        <Link style={ { textDecoration: 'none' } } to= {{ pathname: "/mywebsite/reporteTabla", XML:this.state.XML }}>
-                            <a className="nav-link">Tabla Simbolos</a>
+                        <Link className="nav-link" style={ { textDecoration: 'none' } } to= {{ pathname: "/mywebsite/reporteTabla", XML:this.state.XML }}>
+                            Tabla Simbolos
                         </Link>                         
                     </li>
                 </ul>
@@ -245,7 +243,7 @@ class Navigation extends React.Component{
                     <div className="col-6">
                         <div className="custom-file">
                             <input  multiple={false} accept=".xml" id="fileinput" className="fileinput" type="file" ref={this.fileInput} onChange={this.handleSubmit}/>
-                            <label for="fileinput">Subir XML</label>
+                            <label htmlFor="fileinput">Subir XML</label>
                         </div>
                     </div>
                     <div className="col-6">
