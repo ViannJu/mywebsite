@@ -8,8 +8,11 @@ class TablaErrores extends React.Component{
     constructor(props){
         super(props);
         this.Mistakes = this.props.location.Mistakes;
-        console.log("Aqui estan los errores");
+        this.MistakesXPath = this.props.location.MistakesXPath;
+        console.log("Aqui estan los errores XML");
         console.log(this.Mistakes);
+        console.log("Aqui estan los errores XPath");
+        console.log(this.MistakesXPath);
     }
 
     
@@ -34,7 +37,7 @@ class TablaErrores extends React.Component{
                 <p></p>
 
                 <div className="row">
-                    <label> Tabla de Errores </label>
+                    <label> Tabla de Errores XML </label>
                 </div>
                 
 
@@ -76,8 +79,54 @@ class TablaErrores extends React.Component{
                 </div>
 
                 <p></p>
-            <p></p>
-            <p></p>
+                <p></p>
+                <p></p>
+
+                <div className="row">
+                    <label> Tabla de Errores XPath </label>
+                </div>
+                
+
+                <p></p>
+                <p></p>
+                <p></p>
+                
+                <div className = "container">
+                    <div className="row">
+
+                    <table className="table table-dark"> 
+                    <thead> 
+                    <tr> 
+                        <th>Descripción</th> 
+                        <th>Tipo</th>
+                        <th>Fila</th>
+                        <th>Columna</th>
+                    </tr> 
+                    </thead>
+                    <tbody>
+                    { 
+                        this.MistakesXPath.map(function(item){
+                            return (
+                            <tr>
+                                <td>{item.Error}</td>
+                                <td>{item.tipo}</td>
+                                <td>{item.Linea}</td>
+                                <td>{item.columna}</td>
+                            </tr>
+                            )
+                        }) 
+                    }
+                    </tbody> 
+                </table>
+    
+
+
+                    </div>
+                </div>
+
+                <p></p>
+                <p></p>
+                <p></p>
 
             <footer className="bg-dark text-center text-lg-start">
             <div className="text-center p-3 text-light ">

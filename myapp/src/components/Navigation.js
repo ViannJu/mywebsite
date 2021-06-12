@@ -4,7 +4,7 @@ import React from 'react';
 import { parse as parseXPath } from '../code/analizadorXPath/Xpath'
 
 //const XPath = require('../code/analizadorXPath/Xpath')
-const XPathDesc = require('../code/analizadorXPath/XpathDesc')
+const XPathDesc = require('../code/analizadorXPath/XPathDesc')
 const grammar = require('../code/analizadorXML/grammar')
 const grammarDesc = require('../code/analizadorXMLDesc/grammarDesc')
 
@@ -71,7 +71,8 @@ class Navigation extends React.Component{
                 ]
             },
             graphvizCST:"",
-            Mistakes: []
+            Mistakes: [],
+            MistakesXPath: []
         }
         this.fileInput = React.createRef();
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -97,7 +98,7 @@ class Navigation extends React.Component{
         var datos = {nodes:funcion.Nodos,edges:funcion.Edges}   
         this.setState({datosCST:datos}) 
         this.setState({graphvizCST:funcion.graphviz})
-        this.setState({Mistakes: funcion.errores})
+        this.setState({MistakesXPath: funcion.errores})
     }
 
     setTextDesc(){
@@ -117,7 +118,7 @@ class Navigation extends React.Component{
         var datos = {nodes:funcion.Nodos,edges:funcion.Edges}   
         this.setState({datosCST:datos}) 
         this.setState({graphvizCST:funcion.graphviz})
-        this.setState({Mistakes: funcion.errores})
+        this.setState({MistakesXPath: funcion.errores})
     }
 
     xmlDesc(){
@@ -223,7 +224,7 @@ class Navigation extends React.Component{
                         </Link>                        
                     </li>                
                     <li className="nav-item">
-                        <Link style={ { textDecoration: 'none' } } to= {{ pathname: "/mywebsite/reporteErrores", Mistakes:this.state.Mistakes }}>
+                        <Link style={ { textDecoration: 'none' } } to= {{ pathname: "/mywebsite/reporteErrores", Mistakes:this.state.Mistakes, MistakesXPath:this.state.MistakesXPath }}>
                             <a className="nav-link">Errores</a>
                         </Link>                        
                     </li>
