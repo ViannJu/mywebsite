@@ -15,6 +15,7 @@ class Navigation extends React.Component{
         super(props);
 
         this.state = {
+            fileDownloadUrl:"",
             OutputTextarea: "",
             XMLTextarea: "",
             InputTextarea: "",
@@ -77,6 +78,7 @@ class Navigation extends React.Component{
 
     }
 
+    
 
     setText(){
         console.log("setText Button clicked");
@@ -145,10 +147,6 @@ class Navigation extends React.Component{
         this.setState({Mistakes: resultado.errores})
     }
 
-    refresh(){
-        document.getElementById('XMLTextarea').addEventListener('focus', () => this.actualizar(), false);
-    }
-
     handleOnChange = e => {
         this.setState({
             InputTextarea: e.target.value
@@ -159,6 +157,20 @@ class Navigation extends React.Component{
         this.setState({
             XMLTextarea: e.target.value
         })
+    }
+
+    descargar()
+    {
+        if (this.state.XMLTextarea=="") return
+        const blob = new Blob([this.state.XMLTextarea])
+        const fileDownloadUrl = URL.createObjectURL(blob)
+        this.setState({fileDownloadUrl:fileDownloadUrl},
+            ()=>{
+                this.dofileDownload.click();
+                URL.revokeObjectURL(fileDownloadUrl);
+                this.setState({fileDownloadUrl: ""})
+            }
+        )
     }
 
     fileReader;
@@ -203,6 +215,25 @@ class Navigation extends React.Component{
         return(
             //tag principal
             <header className="App-header">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <ul className="navbar-nav mr-auto">
+                    <li className="nav-item">
+                        <Link style={ { textDecoration: 'none' } } to= {{ pathname: "/mywebsite/reporte", datosCST:this.state.datosCST, datosCSTXML:this.state.datosCSTXML, datosAST:this.state.AST ,graphviz:this.state.graphvizCST }}>
+                            <a className="nav-link">Reportes</a>
+                        </Link>                        
+                    </li>                
+                    <li className="nav-item">
+                        <Link style={ { textDecoration: 'none' } } to= {{ pathname: "/mywebsite/reporteErrores", Mistakes:this.state.Mistakes }}>
+                            <a className="nav-link">Errores</a>
+                        </Link>                        
+                    </li>
+                    <li className="nav-item">
+                        <Link style={ { textDecoration: 'none' } } to= {{ pathname: "/mywebsite/reporteTabla", XML:this.state.XML }}>
+                            <a className="nav-link">Tabla Simbolos</a>
+                        </Link>                         
+                    </li>
+                </ul>
+            </nav>
 
             <img src={logo} className="App-logo" alt="logo" />
                 Organización de Lenguajes y Compiladores 2
@@ -211,11 +242,20 @@ class Navigation extends React.Component{
 
             <div className="container">
                 <div className="row">
-                    <div className="col-4">
+                    <div className="col-6">
                         <div className="custom-file">
-                            <input className="custom-file-input" type="file" ref={this.fileInput} onChange={this.handleSubmit}/>
+                            <input  multiple={false} accept=".xml" id="fileinput" className="fileinput" type="file" ref={this.fileInput} onChange={this.handleSubmit}/>
+                            <label for="fileinput">Subir XML</label>
                         </div>
                     </div>
+                    <div className="col-6">
+                        <a style={{display: "none"}}
+                            download={"archivo.xml"}
+                            href={this.state.fileDownloadUrl}
+                            ref={e=>this.dofileDownload = e}
+                        >download it</a>
+                        <button className="btn btn-secondary btn-lg" onClick={() => this.descargar()}>Descargar XML</button>
+                    </div>
                 </div>
             </div>
 
@@ -223,59 +263,48 @@ class Navigation extends React.Component{
                 <div className="row">
                     <p></p>
                     <p></p>
-                </div>
-            </div>
-
-            <div className="container">
-                <div className="row">
-                    <div className="col">
-                        <button type="button" className="btn btn-primary btn-lg" onClick={ () => this.xmlDesc() }>XML Desc</button>
-                    </div>
-                    <div className="col">
-                        <button type="submit" className="btn btn-primary btn-lg" onClick={ () => this.setText() }>Compilar ASC</button>
-                    </div>
-                    <div className="col">
-                        <button type="submit" className="btn btn-primary btn-lg" onClick={ () => this.setTextDesc() }>Compilar DESC</button>
-                    </div>
-                    <div className="col">
-                        <button type="button" className="btn btn-primary btn-lg" onClick={ () => this.actualizar() }>Actualizar</button>
-                    </div>
-                    <div className="col">
-                        <Link to= {{ pathname: "/mywebsite/reporte", datosCST:this.state.datosCST, datosCSTXML:this.state.datosCSTXML, datosAST:this.state.AST ,graphviz:this.state.graphvizCST }}>
-                            <button type="button" className="btn btn-primary btn-lg">Reportes</button>
-                        </Link>                        
-                    </div>
-                    <div className="col">
-                        <Link to= {{ pathname: "/mywebsite/reporteErrores", Mistakes:this.state.Mistakes }}>
-                            <button type="button" className="btn btn-primary btn-lg">Errores</button>
-                        </Link>                        
-                    </div>
-                    <div className="col">
-                        <Link to= {{ pathname: "/mywebsite/reporteTabla", XML:this.state.XML }}>
-                            <button type="button" className="btn btn-primary btn-lg">Tabla Simbolos</button>
-                        </Link>                        
-                    </div>
                 </div>
             </div>
 
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-6 block">
-                        <label className="labelClass">Xml Input</label>
-                        <textarea className="Text" placeholder="Bienvenido" defaultValue={this.state.XMLTextarea} onChange={this.handleXML} onBlur={this.handleFocus} />
+                        <div className="row">
+                            <div className="col-6 block"> 
+                                <button type="button" className="btn btn-primary btn-lg" onClick={ () => this.xmlDesc() }>XML Desc</button>
+                            </div>
+                            <div className="col-6 block">
+                                <button type="button" className="btn btn-primary btn-lg" onClick={ () => this.actualizar() }>XML Asc</button> 
+                            </div>
+                        </div>
+                        <div className="row container">
+                            <label className="labelClass">Xml Input</label>
+                            <textarea className="Text" placeholder="Bienvenido" defaultValue={this.state.XMLTextarea} onChange={this.handleXML} onBlur={this.handleFocus} />
+                        </div>
                     </div>
                     <div className="col-6 block">
-                        <label className="labelClass">Xpath Input</label>
-                        <textarea className="Text" placeholder="Bienvenido" /*form*/ onChange={this.handleOnChange}></textarea>
+                        <div className="row">
+                            <div className="col-6 block"> 
+                                <button type="submit" className="btn btn-primary btn-lg" onClick={ () => this.setText() }>Ejecutar Asc</button>
+                            </div>
+                            <div className="col-6 block">
+                                <button type="submit" className="btn btn-primary btn-lg" onClick={ () => this.setTextDesc() }>Ejecutar Desc</button>
+                            </div>
+                        </div>
+                        <div className="row container">
+                            <label className="labelClass">Xpath Input</label>
+                            <textarea className="Text" placeholder="Bienvenido" /*form*/ onChange={this.handleOnChange}></textarea>
+                        </div>
                     </div>
                 </div>
+                
             </div>
 
             <div className="container">
                 <div className="row">
                     <label className="labelClass">Output</label>
                     <div className="text-center">
-                        <textarea className="Text" placeholder="Bienvenido" defaultValue={this.state.OutputTextarea} />
+                        <textarea className="Text" readOnly placeholder="Bienvenido" defaultValue={this.state.OutputTextarea} />
                     </div>
                 </div>
             </div>
