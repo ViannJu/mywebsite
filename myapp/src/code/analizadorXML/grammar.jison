@@ -124,7 +124,7 @@ ini
       ListaErrores = [];
       var retornoGrafo = Object.assign({}, grafo);
       grafo = new grafoCST();
-      return {datos:[],edges:[],nodes:[],errores:retornoErrores}
+      return {datos:[],edges:[],nodes:[], tabla:[], errores:retornoErrores}
     }
 ;
 
@@ -141,8 +141,8 @@ CUERPO
       $$ = new helpers.Objeto("/",$1,$2,this._$.first_line, this._$.first_column); 
 			grafo.generarPadre(2,"LISTA_OBJETO");
       grafo.generarPadre(1,"ETIQUETACONFIGURACION");
-      grafo.generarHijos("ETIQUETACONFIGURACION","LISTA_OBJETO")
-      grafo.generarTexto("Cuerpo.entorno = ListaObjeto.entorno; Cuerpo.configuraciones = EtiquetaConfiguracion.configuraciones")
+      grafo.generarHijos("ETIQUETACONFIGURACION","LISTA_OBJETO");
+      grafo.generarTexto("Cuerpo.entorno = ListaObjeto.entorno; Cuerpo.configs = EtiquetaConfigs.configs")
 		}
 ;
 

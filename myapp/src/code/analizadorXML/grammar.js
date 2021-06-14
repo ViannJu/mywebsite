@@ -101,7 +101,7 @@ case 2:
       ListaErrores = [];
       var retornoGrafo = Object.assign({}, grafo);
       grafo = new grafoCST();
-      return {datos:[],edges:[],nodes:[],errores:retornoErrores}
+      return {datos:[],edges:[],nodes:[], tabla:[], errores:retornoErrores}
     
 break;
 case 3:
@@ -117,8 +117,8 @@ case 4:
       this.$ = new helpers.Objeto("/",$$[$0-2],$$[$0-1],this._$.first_line, this._$.first_column); 
 			grafo.generarPadre(2,"LISTA_OBJETO");
       grafo.generarPadre(1,"ETIQUETACONFIGURACION");
-      grafo.generarHijos("ETIQUETACONFIGURACION","LISTA_OBJETO")
-      grafo.generarTexto("Cuerpo.entorno = ListaObjeto.entorno; Cuerpo.configuraciones = EtiquetaConfiguracion.configuraciones")
+      grafo.generarHijos("ETIQUETACONFIGURACION","LISTA_OBJETO");
+      grafo.generarTexto("Cuerpo.entorno = ListaObjeto.entorno; Cuerpo.configs = EtiquetaConfigs.configs")
 		
 break;
 case 5:

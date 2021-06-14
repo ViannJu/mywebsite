@@ -72,7 +72,9 @@ class Navigation extends React.Component{
             },
             graphvizCST:"",
             Mistakes: [],
-            MistakesXPath: []
+            MistakesXPath: [],
+            TablaGramatical: [],
+            TablaGramticalXPath: []
         }
         this.fileInput = React.createRef();
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -97,6 +99,7 @@ class Navigation extends React.Component{
         this.setState({datosCST:datos}) 
         this.setState({graphvizCST:funcion.graphviz})
         this.setState({MistakesXPath: funcion.errores})
+        this.setState({TablaGramticalXPath: funcion.tablaGramatica});
     }
 
     setTextDesc(){
@@ -117,6 +120,7 @@ class Navigation extends React.Component{
         this.setState({datosCST:datos}) 
         this.setState({graphvizCST:funcion.graphviz})
         this.setState({MistakesXPath: funcion.errores})
+        this.setState({TablaGramticalXPath: funcion.tablaGramatica.reverse()});
     }
 
     xmlDesc(){
@@ -124,13 +128,14 @@ class Navigation extends React.Component{
         var resultado = grammarDesc.parse(x);
         if(resultado.errores.length>0)
         {
-            alert("Errores en el analisis del XML")
+            alert("Errores en el analisis Desc del XML")
             console.log(resultado.errores);
         }
         console.log(resultado)
         this.setState({XML:resultado.datos})
         this.setState({datosCSTXML:{nodes:resultado.nodes,edges:resultado.edges}})
         this.setState({Mistakes: resultado.errores})
+        this.setState({TablaGramatical: resultado.tabla.reverse()})
     }
  
     actualizar(){
@@ -143,6 +148,7 @@ class Navigation extends React.Component{
         this.setState({XML:resultado.datos})
         this.setState({datosCSTXML:{nodes:resultado.nodes,edges:resultado.edges}})
         this.setState({Mistakes: resultado.errores})
+        this.setState({TablaGramatical: resultado.tabla})
     }
 
     handleOnChange = e => {
@@ -194,6 +200,7 @@ class Navigation extends React.Component{
         this.setState({XML:resultado.datos})
         this.setState({datosCSTXML:{nodes:resultado.nodes,edges:resultado.edges}})
         this.setState({Mistakes: resultado.errores})
+        this.setState({TablaGramatical: resultado.tabla});
     } 
 
     handleFocus = (e) =>{
@@ -207,6 +214,7 @@ class Navigation extends React.Component{
         this.setState({XML:resultado.datos})
         this.setState({datosCSTXML:{nodes:resultado.nodes,edges:resultado.edges}})
         this.setState({Mistakes: resultado.errores})
+        this.setState({TablaGramatical: resultado.tabla});
     }
 
 
@@ -218,18 +226,23 @@ class Navigation extends React.Component{
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item">
                         <Link className="nav-link" style={ { textDecoration: 'none' } } to= {{ pathname: "/tytusx/20211SVAC/G17/reporte", datosCST:this.state.datosCST, datosCSTXML:this.state.datosCSTXML, datosAST:this.state.AST ,graphviz:this.state.graphvizCST }}>
-                            Reportes
-                        </Link>                        
-                    </li>                
-                    <li className="nav-item">
-                        <Link className="nav-link" style={ { textDecoration: 'none' } } to= {{ pathname: "/tytusx/20211SVAC/G17/reporteErrores", Mistakes:this.state.Mistakes, MistakesXPath:this.MistakesXPath }}>
-                            Errores
+                            Arboles
                         </Link>                        
                     </li>
                     <li className="nav-item">
                         <Link className="nav-link" style={ { textDecoration: 'none' } } to= {{ pathname: "/tytusx/20211SVAC/G17/reporteTabla", XML:this.state.XML }}>
                             Tabla Simbolos
                         </Link>                         
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" style={ { textDecoration: 'none' } } to= {{ pathname: "/tytusx/20211SVAC/G17/reporteGramatical", TablaGramatical:this.state.TablaGramatical, TablaGramticalXPath: this.state.TablaGramticalXPath }}>
+                            Gramaticales
+                        </Link>                        
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" style={ { textDecoration: 'none' } } to= {{ pathname: "/tytusx/20211SVAC/G17/reporteErrores", Mistakes:this.state.Mistakes, MistakesXPath:this.state.MistakesXPath }}>
+                            Errores
+                        </Link>                        
                     </li>
                 </ul>
             </nav>
