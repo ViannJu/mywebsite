@@ -54,7 +54,6 @@
 
 "//" return "DOBLEBARRA"
 "/"         return "BARRA"
-"*"         return "ASTERISCO"
 "@"         return "ARROBA"
 "["         return "CORA"
 "]"         return "CORB"
@@ -485,12 +484,7 @@ NodeTest
 
 NameTest    
   : NOMBRE    { $$=$1; grafo.generarHijos($1); grafo.generarTexto(`NameTest.valor = ${$1};`); }
-	| Wildcard  { $$=$1; grafo.generarHijos($1); grafo.generarTexto(`NameTest.valor = Wildcard.valor;`); }
-;
-
-//
-Wildcard    
-  : ASTERISCO { $$=$1; grafo.generarHijos($1); grafo.generarTexto(`Wildcard.valor = ${$1}`); }
+	| POR       { $$=$1; grafo.generarHijos($1); grafo.generarTexto(`NameTest.valor = ${$1};`); }
 ;
 
 //Faltan las formas no abrevidas

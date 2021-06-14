@@ -57,22 +57,22 @@ function operar(izq, op, der){
     if (Colision[izq.tipo][der.tipo]){
         switch(op){
             case "+":
-                retorno =  izq.valor + der.valor
+                retorno =  Number(izq.valor) + Number(der.valor)
                 break;
             case "-":
-                retorno = izq.valor - der.valor
+                retorno = Number(izq.valor) - Number(der.valor)
                 break;
             case "*":
-                retorno = izq.valor * der.valor
+                retorno = Number(izq.valor) * Number(der.valor)
                 break;
             case "div":
-                retorno = izq.valor / der.valor
+                retorno = Number(izq.valor) / Number(der.valor)
                 break;
             case "mod":
-                retorno = izq.valor % der.valor
+                retorno = Number(izq.valor) % Number(der.valor)
                 break;
             case "idiv":
-                retorno = Math.trunc(izq.valor / der.valor)
+                retorno = Math.trunc(Number(izq.valor) / Number(der.valor))
                 break;
         }   
     }

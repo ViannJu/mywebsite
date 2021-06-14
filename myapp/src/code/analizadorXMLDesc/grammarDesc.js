@@ -139,8 +139,8 @@ case 6:
 break;
 case 7:
  
-      this.$ = new Array(); grafo.generarHijos("Ɛ");
-      grafo.generarTexto("");
+      this.$ = new Array(); 
+      grafo.generarHijos("Ɛ");
       grafo.generarTexto(`ListaObjeto.entorno = new Entorno();`)
     
 break;
@@ -161,7 +161,7 @@ case 9:
 break;
 case 10:
  
-    $$[$0].Linea=this._$.first_line; $$[$0].columna=this._$.first_column;
+    $$[$0].linea=this._$.first_line; $$[$0].columna=this._$.first_column;
     this.$ = objetoCorrecto($$[$0-1], $$[$0],this._$.first_line, this._$.first_column)? $$[$0]:null;
     grafo.generarPadre(2, "SUB_OBJETOGENERAL");
     grafo.generarHijos($$[$0-1],"SUB_OBJETOGENERAL");
@@ -235,7 +235,7 @@ case 19:
 break;
 case 20:
  
-    this.$ = $$[$0]; grafo.generarPadre(1, "SUB_ETIQUETACONFIG");
+    this.$ = $$[$0-1]; grafo.generarPadre(1, "SUB_ETIQUETACONFIG");
     grafo.generarHijos("LISTA_ATRIBUTOSCONF",$$[$0]) 
     grafo.generarTexto(`SUB_ETIQUETACONFIG.valor = Lista_AtributosConf.configuraciones;`)
   
@@ -292,9 +292,8 @@ case 27:
  
     this.$ = new helpers.Atributo($$[$0-2],$$[$0],this._$.first_line, this._$.first_column); 
     grafo.generarHijos($$[$0-2],$$[$0-1],$$[$0]) 
-    if ($$[$0-2] == 'encoding')
-      tipoCodificacion = $$[$0]
-      grafo.generarTexto(`AtributoConf.configuracion = new Configuracion(${$$[$0-2]},${$$[$0]},${this._$.first_line},${this._$.first_column})`)
+    if ($$[$0-2] == 'encoding') tipoCodificacion = $$[$0]
+    grafo.generarTexto(`AtributoConf.configuracion = new Configuracion(${$$[$0-2]},${$$[$0]},${this._$.first_line},${this._$.first_column})`)
   
 break;
 case 28:

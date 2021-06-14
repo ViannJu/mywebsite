@@ -164,8 +164,8 @@ SUB_LISTA_OBJETO
     }
     |                                                   
     { 
-      $$ = new Array(); grafo.generarHijos("Ɛ");
-      grafo.generarTexto("");
+      $$ = new Array(); 
+      grafo.generarHijos("Ɛ");
       grafo.generarTexto(`ListaObjeto.entorno = new Entorno();`)
     }
 ;
@@ -189,7 +189,7 @@ OBJETO
 OBJETOGENERAL
   : InicioEtiquetaI SUB_OBJETOGENERAL                         
   { 
-    $2.Linea=this._$.first_line; $2.columna=this._$.first_column;
+    $2.linea=this._$.first_line; $2.columna=this._$.first_column;
     $$ = objetoCorrecto($1, $2,this._$.first_line, this._$.first_column)? $2:null;
     grafo.generarPadre(2, "SUB_OBJETOGENERAL");
     grafo.generarHijos($1,"SUB_OBJETOGENERAL");
@@ -270,7 +270,7 @@ ETIQUETACONFIGURACION
 SUB_ETIQUETACONFIG
   : LISTA_ATRIBUTOSCONF CierreEtiquetaConf 	            
   { 
-    $$ = $2; grafo.generarPadre(1, "SUB_ETIQUETACONFIG");
+    $$ = $1; grafo.generarPadre(1, "SUB_ETIQUETACONFIG");
     grafo.generarHijos("LISTA_ATRIBUTOSCONF",$2) 
     grafo.generarTexto(`SUB_ETIQUETACONFIG.valor = Lista_AtributosConf.configuraciones;`)
   }
@@ -328,9 +328,8 @@ ATRIBUTOCONF
   : AtributoConf IgualAtributoConf ValorAtributoConf    { 
     $$ = new helpers.Atributo($1,$3,this._$.first_line, this._$.first_column); 
     grafo.generarHijos($1,$2,$3) 
-    if ($1 == 'encoding')
-      tipoCodificacion = $3
-      grafo.generarTexto(`AtributoConf.configuracion = new Configuracion(${$1},${$3},${this._$.first_line},${this._$.first_column})`)
+    if ($1 == 'encoding') tipoCodificacion = $3
+    grafo.generarTexto(`AtributoConf.configuracion = new Configuracion(${$1},${$3},${this._$.first_line},${this._$.first_column})`)
   }
   | AtributoConf error                                  
   { 

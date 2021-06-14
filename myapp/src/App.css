@@ -73,5 +73,6 @@
   height: 550px;
 }
 
-
+@import url('../node_modules/codemirror/lib/codemirror.css');
+@import url('../node_modules/codemirror/theme/dracula.css');
 

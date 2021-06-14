@@ -54,7 +54,6 @@
 
 "//" return "DOBLEBARRA"
 "/"         return "BARRA"
-"*"         return "ASTERISCO"
 "@"         return "ARROBA"
 "["         return "CORA"
 "]"         return "CORB"
@@ -93,6 +92,7 @@
 /lex
 
 %left 'MAS' 'MENOS'
+%left ASTERISCO
 %left 'POR' 'DIV' 'IDIV' 'MOD'
 %left UMENOS UMAS
 
@@ -135,9 +135,8 @@ Expr
         $$=[];$$.push($1);
         grafo.generarPadre(1,"ExprSingle");
         grafo.generarHijos("ExprSingle","error") 
-        ListaErrores.push({Error:"Error sintactico se recupero en:"+yytext,tipo:"Sintactico",Linea:this._$.first_line,columna:this._$.first_column}); 
-        grafo.generarHijos("error",$2);
         grafo.generarTexto(`Expr.push(ExprSingle.valor); Expr.valor = []; new Error();`); 
+        ListaErrores.push({Error:"Error sintactico se recupero en:"+yytext,tipo:"Sintactico",Linea:this._$.first_line,columna:this._$.first_column}); 
       }
 ;
 
@@ -157,12 +156,11 @@ P_Expr
     }
     | PIPE ExprSingle error 
     { 
-      $$=[];$$.push($2);grafo.generarPadre(2,"ExprSingle");
+      $$=[];$$.push($2);
+      grafo.generarPadre(2,"ExprSingle");
       grafo.generarHijos($1,"ExprSingle","error") 
-      ListaErrores.push({Error:"Error sintactico se recupero en:"+yytext,tipo:"Sintactico",Linea:this._$.first_line,columna:this._$.first_column}); 
-      grafo.generarPadre(1,"PIPE"); 
-      grafo.generarHijos("error",$2) 
       grafo.generarTexto(`P_Expr.valor = []; P_Expr.push(ExprSingle.valor); new Error();`);
+      ListaErrores.push({Error:"Error sintactico se recupero en:"+yytext,tipo:"Sintactico",Linea:this._$.first_line,columna:this._$.first_column}); 
     }
 ;
 
@@ -232,7 +230,7 @@ P_AndExpr
 ComparisonExpr
     : AdditiveExpr SUB_AdditiveExpr                     
     { 
-      if($2==null){$$=$1;}else{$$=$2; $$.izq = $1;} 
+      if($2==null){$$=$1;}else{$$=$2; $$.izquierdo = $1;} 
       grafo.generarPadre(2, "SUB_AdditiveExpr"); 
       grafo.generarPadre(1, "AdditiveExpr"); 
       grafo.generarHijos("AdditiveExpr","SUB_AdditiveExpr");
@@ -268,7 +266,7 @@ GeneralComp       // signo
 AdditiveExpr
     : MultiplicativeExpr P_AdditiveExpr                 
     { 
-      if($2==null){$$=$1;}else{$$=$2; $$.izq = $1;}; 
+      if($2==null){$$=$1;}else{$$=$2; $$.izquierdo = $1;}; 
       grafo.generarPadre(2,"P_AdditiveExpr");
       grafo.generarPadre(1,"MultiplicativeExpr"); 
       grafo.generarHijos("MultiplicativeExpr", "P_AdditiveExpr");
@@ -279,7 +277,7 @@ AdditiveExpr
 P_AdditiveExpr
     : MAS MultiplicativeExpr P_AdditiveExpr             
     { 
-      if($3==null){$$=new Arithmetic(null,$1,$2);}else{$$ = $3; $$.izq = $2;} 
+      if($3==null){$$=new Arithmetic(null,$1,$2);}else{$$ = $3; $$.izquierdo = $2;} 
       grafo.generarPadre(3,"P_AdditiveExpr");
       grafo.generarPadre(2, "MultiplicativeExpr"); 
       grafo.generarHijos($1, "MultiplicativeExpr", "P_AdditiveExpr");
@@ -287,7 +285,7 @@ P_AdditiveExpr
     }
     | MENOS MultiplicativeExpr P_AdditiveExpr           
     { 
-      if($3==null){$$=new Arithmetic(null,$1,$2);}else{$$ = $3; $$.izq = $2;} 
+      if($3==null){$$=new Arithmetic(null,$1,$2);}else{$$ = $3; $$.izquierdo = $2;} 
       grafo.generarPadre(3,"P_AdditiveExpr");
       grafo.generarPadre(2,"MultiplicativeExpr"); 
       grafo.generarHijos($1, "MultiplicativeExpr", "P_AdditiveExpr");
@@ -303,7 +301,7 @@ P_AdditiveExpr
 MultiplicativeExpr
     : UnaryExpr P_MultiplicativeExpr                    
     { 
-      if($2==null){$$=$1;}else{$$=$2; $$.izq = $1;}; 
+      if($2==null){$$=$1;}else{$$=$2; $$.izquierdo = $1;}; 
       grafo.generarPadre(2,"P_MultiplicativeExpr");
       grafo.generarPadre(1,"UnaryExpr"); 
       grafo.generarHijos("UnaryExpr", "P_MultiplicativeExpr");
@@ -314,7 +312,7 @@ MultiplicativeExpr
 P_MultiplicativeExpr
     : POR /* * */ UnaryExpr P_MultiplicativeExpr        
     { 
-      if($3==null){$$=new Arithmetic(null,$1,$2);}else{$$ = $3; $$.izq = $2; };
+      if($3==null){$$=new Arithmetic(null,$1,$2);}else{$$ = $3; $$.izquierdo = $2; };
       grafo.generarPadre(3,"P_MultiplicativeExpr");
       grafo.generarPadre(2,"UnaryExpr"); 
       grafo.generarHijos($1, "UnaryExpr", "P_MultiplicativeExpr");
@@ -322,7 +320,7 @@ P_MultiplicativeExpr
     }
     | DIV /* div */ UnaryExpr P_MultiplicativeExpr      
     { 
-      if($3==null){$$=new Arithmetic(null,$1,$2);}else{$$ = $3; $$.izq = $2; };
+      if($3==null){$$=new Arithmetic(null,$1,$2);}else{$$ = $3; $$.izquierdo = $2; };
       grafo.generarPadre(3,"P_MultiplicativeExpr");
       grafo.generarPadre(2,"UnaryExpr");  
       grafo.generarHijos($1, "UnaryExpr", "P_MultiplicativeExpr");
@@ -330,7 +328,7 @@ P_MultiplicativeExpr
     }
     | IDIV /* idiv */ UnaryExpr P_MultiplicativeExpr    
     { 
-      if($3==null){$$=new Arithmetic(null,$1,$2);}else{$$ = $3; $$.izq = $2; }; 
+      if($3==null){$$=new Arithmetic(null,$1,$2);}else{$$ = $3; $$.izquierdo = $2; }; 
       grafo.generarPadre(3, "P_MultiplicativeExpr");
       grafo.generarPadre(2, "UnaryExpr");
       grafo.generarHijos($1, "UnaryExpr", "P_MultiplicativeExpr");
@@ -338,7 +336,7 @@ P_MultiplicativeExpr
     }
     | MOD /* mod */ UnaryExpr P_MultiplicativeExpr      
     { 
-      if($3==null){$$=new Arithmetic(null,$1,$2);}else{$$ = $3; $$.izq = $2; }; 
+      if($3==null){$$=new Arithmetic(null,$1,$2);}else{$$ = $3; $$.izquierdo = $2; }; 
       grafo.generarPadre(3, "P_MultiplicativeExpr");
       grafo.generarPadre(2, "UnaryExpr"); 
       grafo.generarHijos($1, "UnaryExpr", "P_MultiplicativeExpr");
@@ -463,7 +461,8 @@ StepExpr
 AxisStep
     : ForwardStep SUB_PredicateList                       
     { 
-      $$ = $1; $$.predicado = $2; grafo.generarPadre(2);
+      $$ = $1; $$.predicado = $2; 
+      grafo.generarPadre(2, "SUB_PredicateList");
       grafo.generarPadre(1, "ForwardStep");
       grafo.generarHijos("ForwardStep", "SUB_PredicateList");
       grafo.generarTexto(`ForwardStep.predicado = SUB_PredicateList.valor; AxisStep.valor = ForwardStep.valor;`);
@@ -480,7 +479,7 @@ AxisStep
 SUB_PredicateList
     : PredicateList                                     
     { 
-      $$ = $1; grafo.generarPadre(1);
+      $$ = $1; grafo.generarPadre(1,"PredicateList");
       grafo.generarHijos("PredicateList");
       grafo.generarTexto(`SUB_PredicateList.valor = PredicateList.valor`);
     }
@@ -522,13 +521,15 @@ P_PredicateList
 ForwardStep 
   : AbbrevForwardStep    
   { 
-    $$=$1; grafo.generarPadre(1, "AbbrevForwardStep");
+    $$=$1; 
+    grafo.generarPadre(1, "AbbrevForwardStep");
     grafo.generarHijos("AbbrevForwardStep");
     grafo.generarTexto(`ForwardStep.valor = AbbrevForwardStep.valor`);
   }
   | ForwardAxis NameTest 
   { 
-    $$=$1; $$.nombre=$2; grafo.generarPadre(2, "NameTest");
+    $$=$1; $$.nombre=$2; 
+    grafo.generarPadre(2, "NameTest");
     grafo.generarPadre(1, "ForwardAxis");
     grafo.generarHijos("ForwardAxis", "NameTest");
     grafo.generarTexto(`ForwardAxis.nombre = NameTest.valor; ForwardStep.valor = ForwardAxis.valor`);
@@ -573,12 +574,8 @@ NodeTest
 ;
 
 NameTest    
-  : NOMBRE                                 { $$ = $1; grafo.generarHijos($1); grafo.generarTexto(`NameTest.valor = ${$1};`); }
-	| Wildcard                               { $$ = $1; grafo.generarPadre(1); grafo.generarHijos("Wildcard"); grafo.generarTexto(`NameTest.valor = Wildcard.valor;`); }
-;
-
-Wildcard    
-  : ASTERISCO                               { $$ = $1; grafo.generarHijos($1); grafo.generarTexto(`Wildcard.valor = ${$1}`); }
+  : NOMBRE      { $$ = $1; grafo.generarHijos($1); grafo.generarTexto(`NameTest.valor = ${$1};`); }
+	| POR         { $$ = $1; grafo.generarHijos($1); grafo.generarTexto(`NameTest.valor = ${$1};`); }
 ;
 
 ReverseStep 
@@ -627,15 +624,15 @@ Predicate
 ;
 
 PrimaryExpr 
-  : Literal                                 { $$ = $1; grafo.generarPadre(1, "Literal"); grafo.generarHijos("Literal"); grafo.generarHijos("Literal"); grafo.generarTexto("PrimaryExpr.valor = literal.valor"); }
-	| FunctionCall                            { $$ = $1; grafo.generarPadre(1, "FunctionCall"); grafo.generarHijos("FunctionCall"); grafo.generarHijos("FunctionCall"); grafo.generarTexto("PrimaryExpr.valor = functionCall.valor"); }
-	| ContextItemExpr                         { $$ = $1; grafo.generarPadre(1, "ContextItemExpr"); grafo.generarHijos("ContextItemExpr"); grafo.generarHijos("ContextItemExpr"); grafo.generarTexto("PrimaryExpr.valor = contextItemExpr.valor"); }
-	| ParenthesizedExpr                       { $$ = $1; grafo.generarPadre(1, "ParenthesizedExpr"); grafo.generarHijos("ParenthesizedExpr"); grafo.generarHijos("ParenthesizedExpr"); grafo.generarTexto("PrimaryExpr.valor = ParenthesizedExpr.valor"); }
+  : Literal                                 { $$ = $1; grafo.generarPadre(1, "Literal");grafo.generarHijos("Literal"); grafo.generarTexto("PrimaryExpr.valor = literal.valor"); }
+	| FunctionCall                            { $$ = $1; grafo.generarPadre(1, "FunctionCall");grafo.generarHijos("FunctionCall"); grafo.generarTexto("PrimaryExpr.valor = functionCall.valor"); }
+	| ContextItemExpr                         { $$ = $1; grafo.generarPadre(1, "ContextItemExpr");grafo.generarHijos("ContextItemExpr"); grafo.generarTexto("PrimaryExpr.valor = contextItemExpr.valor"); }
+	| ParenthesizedExpr                       { $$ = $1; grafo.generarPadre(1, "ParenthesizedExpr");grafo.generarHijos("ParenthesizedExpr"); grafo.generarTexto("PrimaryExpr.valor = ParenthesizedExpr.valor"); }
 ;
 
 Literal     
-  : INTEGER                                 { $$=new Literal(Tipo.INTEGER,$1); grafo.generarHijos($1); grafo.generarTexto(`return literal = new Literal(${$1}); literal.tipo = INTEGER;`); }
-	| DECIMAL                                 { $$=new Literal(Tipo.DECIMAL,$1); grafo.generarHijos($1); grafo.generarTexto(`return literal = new Literal(${$1}); literal.tipo = DECIMAL;`); }
+  : INTEGER                                 { $$=new Literal(Tipo.INTEGER,Number($1)); grafo.generarHijos($1); grafo.generarTexto(`return literal = new Literal(${$1}); literal.tipo = INTEGER;`); }
+	| DECIMAL                                 { $$=new Literal(Tipo.DECIMAL,Number($1)); grafo.generarHijos($1); grafo.generarTexto(`return literal = new Literal(${$1}); literal.tipo = DECIMAL;`); }
 	| CADENA                                  { $$=new Literal(Tipo.STRING,$1); grafo.generarHijos($1); grafo.generarTexto(`return literal = new Literal(${$1}); literal.tipo = STRING;`); }
 ;
 

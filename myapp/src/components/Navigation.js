@@ -2,6 +2,11 @@ import logo from '../logo.svg';
 import { Link } from 'react-router-dom'
 import React from 'react';
 import { parse as parseXPath } from '../code/analizadorXPath/Xpath'
+import {UnControlled as CodeMirror} from 'react-codemirror2'
+
+require('../../node_modules/codemirror/mode/xquery/xquery')
+require('../../node_modules/codemirror/mode/xml/xml')
+require('../../node_modules/codemirror/mode/javascript/javascript')
 
 //const XPath = require('../code/analizadorXPath/Xpath')
 const XPathDesc = require('../code/analizadorXPath/XPathDesc')
@@ -153,13 +158,13 @@ class Navigation extends React.Component{
 
     handleOnChange = e => {
         this.setState({
-            InputTextarea: e.target.value
+            InputTextarea: e.getValue()
         })
     } 
 
     handleXML = e => {
         this.setState({
-            XMLTextarea: e.target.value
+            XMLTextarea: e.getValue()
         })
     }
 
@@ -204,8 +209,8 @@ class Navigation extends React.Component{
     } 
 
     handleFocus = (e) =>{
-        if(e.target.value=="") return
-        var resultado = grammar.parse(e.target.value)        
+        if(e.getValue()=="") return
+        var resultado = grammar.parse(e.getValue())        
         console.log(resultado)
         if(resultado.errores.length>0)
         {
@@ -291,7 +296,24 @@ class Navigation extends React.Component{
                         </div>
                         <div className="row container">
                             <label className="labelClass">Xml Input</label>
-                            <textarea className="Text" placeholder="Bienvenido" defaultValue={this.state.XMLTextarea} onChange={this.handleXML} onBlur={this.handleFocus} />
+                            {/* <textarea className="Text" placeholder="Bienvenido" defaultValue={this.state.XMLTextarea} onChange={this.handleXML} onBlur={this.handleFocus} /> */}
+                            <CodeMirror
+                             className="codeMirror"
+                             value={this.state.XMLTextarea}
+                             options={{
+                                mode: 'xml',
+                                theme: 'dracula',
+                                lineNumbers: true,
+                                styleActiveLine: true,
+                                lineWrapping: true,
+                                columnNumbers:true,
+                                foldGutter: true,
+                                gutter: true,
+                              }}
+                             onBlur={this.handleFocus}
+                             onChange={this.handleXML}
+                             placeholder="Bienvenido"
+                             />
                         </div>
                     </div>
                     <div className="col-6 block">
@@ -304,19 +326,47 @@ class Navigation extends React.Component{
                             </div>
                         </div>
                         <div className="row container">
-                            <label className="labelClass">Xpath Input</label>
-                            <textarea className="Text" placeholder="Bienvenido" /*form*/ onChange={this.handleOnChange}></textarea>
+                            <label className="labelClass">Xpath Input</label> 
+                            <CodeMirror
+                             className="codeMirror"
+                             options={{
+                                mode: 'xquery',
+                                theme: 'dracula',
+                                lineNumbers: true,
+                                styleActiveLine: true,
+                                lineWrapping: true,
+                                columnNumbers:true,
+                                foldGutter: true,
+                                gutter: true,
+                              }}
+                             onChange={this.handleOnChange}
+                             placeholder="Bienvenido"
+                             />
                         </div>
                     </div>
                 </div>
-                
             </div>
 
             <div className="container">
                 <div className="row">
                     <label className="labelClass">Output</label>
                     <div className="text-center">
-                        <textarea className="Text" readOnly placeholder="Bienvenido" defaultValue={this.state.OutputTextarea} />
+                        <CodeMirror
+                             className="codeMirror"
+                             value={this.state.OutputTextarea}
+                             options={{
+                                mode: 'xml',
+                                theme: 'dracula',
+                                lineNumbers: true,
+                                styleActiveLine: true,
+                                lineWrapping: true,
+                                columnNumbers:true,
+                                foldGutter: true,
+                                gutter: true,
+                                readOnly:true,
+                              }}
+                             placeholder="Bienvenido"
+                             />
                     </div>
                 </div>
             </div>
@@ -324,6 +374,8 @@ class Navigation extends React.Component{
             <p></p>
             <p></p>
             <p></p>
+
+            <div className="container"></div>
 
             <footer className="bg-dark text-center text-lg-start">
             <div className="text-center p-3 text-light ">

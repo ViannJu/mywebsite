@@ -152,7 +152,7 @@ export function Predicado(predicado,retorno)
   if(predicado.length > 0)
   {
     for (const iterator of predicado) {
-      var posibles = iterator.getValor(retorno)
+      var posibles = iterator.getValor(predicado)
       if(posibles.length==0)
       {
         return []

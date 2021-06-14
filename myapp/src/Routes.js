@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Navigation from './components/Navigation'
 import Reporte from './components/InConsole'
@@ -7,6 +7,9 @@ import TablaErrores from './components/TablaErrores'
 import Gramatical  from './components/Gramatical'
 
 const Routes = () => {
+    useEffect(()=>{
+        document.title="CompiladorX G17"
+    })
     return (
         <Switch>
             <Route exact path = "/" component={Navigation}/>
