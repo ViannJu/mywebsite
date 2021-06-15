@@ -1,4 +1,4 @@
-
+const { ErroresGlobal, LimpiarErrores } = require('./Global')
 //Enum de tipos
 export const Tipo = {
     "INTEGER" : 0,
@@ -10,6 +10,29 @@ export const Tipo = {
     "ERROR"   : 6,
     "SIBLING" : 7
 } 
+
+export function getTipoById(numero)
+{
+  switch(numero)
+  {
+    case 0:
+      return "integer"
+    case 1:
+      return "decimal"
+    case 2:
+      return "string"
+    case 3:
+      return "nodo"
+    case 4:
+      return "boolean"
+    case 5:
+      return "atrib" 
+    case 6:
+      return "error" 
+    case 7:
+      return "sibling"
+  }
+}  
 
 export var Siblings = []
 
@@ -46,7 +69,6 @@ export const ColisionLogical =
   [Tipo.ERROR,    Tipo.ERROR,   Tipo.ERROR, Tipo.ERROR,   Tipo.ERROR, Tipo.ERROR  , Tipo.ERROR],
 ]
 
-
 export const TipoPath = {
     "ABS" : "absoluto",
     "REL" : "relativo"
@@ -66,6 +88,7 @@ export class Comando
 
   Ejecutar(XML)
   {
+    LimpiarErrores()
     var Salida = ""
     var retornos=[]
     for (const iterator of this.Instrucciones) {
@@ -86,6 +109,7 @@ export class Comando
         Salida += retorno.valor + "\n"
       }
     }
+    this.errores = this.errores.concat(ErroresGlobal)
     return Salida;
   }
 
@@ -152,7 +176,7 @@ export function Predicado(predicado,retorno)
   if(predicado.length > 0)
   {
     for (const iterator of predicado) {
-      var posibles = iterator.getValor(predicado)
+      var posibles = iterator.getValor(retorno)
       if(posibles.length==0)
       {
         return []
@@ -167,10 +191,13 @@ export function Predicado(predicado,retorno)
           case Tipo.INTEGER:
           case Tipo.DECIMAL:
             var temp=[]
+            var actuales=new Map()
             var posicion=1;
             for (const posible of posibles) {
+              if(actuales.has==posibles.valor) continue
               if(retorno[posible.valor-1])
               {
+                actuales.set(posibles.valor,posibles.valor)
                 temp.push(retorno[posible.valor-1])
                 posicion++;
               }

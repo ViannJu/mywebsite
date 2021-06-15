@@ -1,4 +1,5 @@
-var {Tipo, Colision} = require("../AST/Entorno");
+var {Tipo, Colision, getTipoById} = require("../AST/Entorno");
+const { ErroresGlobal } = require('../AST/Global')
 const { Literal } = require("./Expresiones");
 
 export class ComparisonExp {
@@ -16,11 +17,9 @@ export class ComparisonExp {
         for (var obj of Objetos ){
             var valIzq = this.izquierdo.getValor([obj])
             var valDer = this.derecho.getValor([obj])
-
             for (var izq of valIzq) {
                 var salir = false
                 for (var der of valDer){
-
                     if (comparison(izq,this.op,der)){
                         retorno.push(obj)
                         salir = true
@@ -53,6 +52,7 @@ export class ComparisonExp {
 function comparison(izq, op, der) {
     if(!Colision[izq.tipo][der.tipo])
     {
+        ErroresGlobal.push({Error:`No se pudieron operar los tipos ${getTipoById(izq.tipo)} - ${getTipoById(der.tipo)}`,tipo:"Semantico",Linea:0,columna:0})
         return false
     }
     switch(op)
