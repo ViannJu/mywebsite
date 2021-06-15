@@ -128,13 +128,26 @@ export class Comando
       if(i!=0)
       {
         ListaNodes.push({id:contador.num,label:"|"})
+        nodos.push({id:contador.num,label:"|"})
         contador.num++
       }
       for (const nodo of nodos) {
-        ListaEdges.push({from:nodoActual.id,to:nodo.id})
+        ListaEdges.unshift({from:nodoActual.id,to:nodo.id})
       }
     }
     return {nodes:ListaNodes,edges:ListaEdges}
+  }
+
+  InvertirNodes()
+  {
+    var NoGrade = this.Nodos[this.Nodos.length-1].id
+    for (const nodo of this.Nodos) {
+      nodo.id = Math.abs(nodo.id-NoGrade)
+    }
+    for (const edge of this.Edges) {
+      edge.from = Math.abs(edge.from-NoGrade)
+      edge.to = Math.abs(edge.to-NoGrade)
+    }
   }
 }
 

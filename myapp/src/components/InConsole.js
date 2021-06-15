@@ -1,7 +1,7 @@
 import './InConsole.css';
 import logo from '../logo.svg';
 import { Link } from 'react-router-dom'
-import  Graph  from 'vis-react'
+import  Graph  from 'react-graph-vis'
 import React, { Component } from 'react';
 
 

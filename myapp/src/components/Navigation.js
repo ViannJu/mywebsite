@@ -98,12 +98,12 @@ class Navigation extends React.Component{
             console.log(funcion.errores)
         }
         var respuesta=funcion.Ejecutar(this.state.XML);
+        this.setState({OutputTextarea: respuesta});  
         var AST = funcion.Graficar();
         this.setState({AST:AST})
-        this.setState({OutputTextarea: respuesta});  
+        funcion.InvertirNodes()
         var datos = {nodes:funcion.Nodos,edges:funcion.Edges}   
         this.setState({datosCST:datos}) 
-        this.setState({graphvizCST:funcion.graphviz})
         this.setState({MistakesXPath: funcion.errores})
         this.setState({TablaGramticalXPath: funcion.tablaGramatica});
     }
@@ -326,10 +326,8 @@ class Navigation extends React.Component{
                                 theme: 'dracula',
                                 lineNumbers: true,
                                 styleActiveLine: true,
-                                lineWrapping: true,
                                 columnNumbers:true,
-                                foldGutter: true,
-                                gutter: true,
+                                inputStyle:'textarea'
                               }}
                              onBlur={this.handleFocus}
                              onChange={this.handleXML}
