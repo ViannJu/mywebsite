@@ -585,7 +585,7 @@ export class AncestorSelf extends Axes
       for (const iterator of retorno) {
         retornos.set(iterator.entorno,iterator) 
       }
-      if(this.tipo=TipoPath.REL)
+      if(this.tipo==TipoPath.REL)
       {
         for (const hijo of nodo.entorno.hijos) {     
           var nuevaPila = Object.assign([],nodo.pila)
