@@ -1,4 +1,5 @@
-const { Colision, ColisionTipo, Tipo } = require('../AST/Entorno')
+const { Colision, ColisionTipo, Tipo, getTipoById } = require('../AST/Entorno')
+const { ErroresGlobal } = require('../AST/Global')
 const { Literal } = require("./Expresiones");
 
 export class Arithmetic {
@@ -20,7 +21,7 @@ export class Arithmetic {
             for (var izq of valIzq){
                 for (var der of valDer){
                     var newValor = operar(izq, this.op, der)
-                    if (newValor){
+                    if (newValor && !this.contiene(retorno,newValor)){
                         retorno.push(
                             new Literal(
                                 ColisionTipo[izq.tipo][der.tipo],
@@ -33,6 +34,14 @@ export class Arithmetic {
         }
         return retorno
     } 
+
+    contiene(objeto,numero)
+    {
+        for (const iterator of objeto) {
+            if(iterator.valor==numero) return true
+        }
+        return false
+    }
 
     Graficar(ListaNodes,ListaEdges,contador)
     {
@@ -75,7 +84,11 @@ function operar(izq, op, der){
                 retorno = Math.trunc(Number(izq.valor) / Number(der.valor))
                 break;
         }   
-    }
+    } 
+    else
+    {
+        ErroresGlobal.push({Error:`No se pudieron operar los tipos ${getTipoById(izq.tipo)} - ${getTipoById(der.tipo)}`,tipo:"Semantico",Linea:0,columna:0})
+    } 
     return retorno
 }
 
@@ -94,20 +107,31 @@ export class Unary {
             for (var izq of valIzq) {
                 if (Colision[Tipo.INTEGER][izq.tipo]){
                     var newValor = null
-                switch(this.op){
-                    case "-":
-                        newValor = - izq.valor
-                    break;
-                    case "+":
-                        newValor = + izq.valor
-                    break;
+                    switch(this.op){
+                        case "-":
+                            newValor = - izq.valor
+                        break;
+                        case "+":
+                            newValor = + izq.valor
+                        break;
+                    } 
+                    if (newValor && !this.contiene(retorno,newValor)) retorno.push(new Literal(izq.tipo, newValor))
                 }
-                if (newValor)
-                    retorno.push(new Literal(izq.tipo, newValor))
-                }
+                else
+                {
+                    ErroresGlobal.push({Error:`No se puede realizar operacion en ${getTipoById(izq.tipo)}`,tipo:"Semantico",Linea:0,columna:0})
+                } 
             }
         }
         return retorno
+    }
+
+    contiene(objeto,numero)
+    {
+        for (const iterator of objeto) {
+            if(iterator.valor==numero) return true
+        }
+        return false
     }
 
     Graficar(ListaNodes,ListaEdges,contador)

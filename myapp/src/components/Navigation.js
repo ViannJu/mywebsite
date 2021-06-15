@@ -82,6 +82,7 @@ class Navigation extends React.Component{
             TablaGramticalXPath: []
         }
         this.fileInput = React.createRef();
+        this.fileInput2 = React.createRef();
         this.handleSubmit = this.handleSubmit.bind(this);
 
     }
@@ -208,6 +209,20 @@ class Navigation extends React.Component{
         this.setState({TablaGramatical: resultado.tabla});
     } 
 
+    fileReader2;
+
+    handleSubmitPath = (event) => {
+        this.fileReader2 = new FileReader();
+        this.fileReader2.onloadend =  this.handleFileReaderPath;
+        this.fileReader2.readAsText(event.target.files[0]);
+    }
+
+    handleFileReaderPath = (e) => {
+        const content = this.fileReader2.result;
+        console.log(content);
+        this.setState({InputTextarea: content});
+    } 
+
     handleFocus = (e) =>{
         if(e.getValue()=="") return
         var resultado = grammar.parse(e.getValue())        
@@ -259,19 +274,25 @@ class Navigation extends React.Component{
 
             <div className="container">
                 <div className="row">
-                    <div className="col-6">
+                    <div className="col-3">
                         <div className="custom-file">
                             <input  multiple={false} accept=".xml" id="fileinput" className="fileinput" type="file" ref={this.fileInput} onChange={this.handleSubmit}/>
                             <label htmlFor="fileinput">Subir XML</label>
                         </div>
                     </div>
-                    <div className="col-6">
+                    <div className="col-3">
                         <a style={{display: "none"}}
                             download={"archivo.xml"}
                             href={this.state.fileDownloadUrl}
                             ref={e=>this.dofileDownload = e}
                         >download it</a>
                         <button className="btn btn-secondary btn-lg" onClick={() => this.descargar()}>Descargar XML</button>
+                    </div>
+                    <div className="col-6">
+                        <div className="custom-file">
+                            <input  multiple={false} accept=".xml" id="fileinput2" className="fileinput" type="file" ref={this.fileReader2} onChange={this.handleSubmitPath}/>
+                            <label htmlFor="fileinput2">Subir XPath</label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -329,6 +350,7 @@ class Navigation extends React.Component{
                             <label className="labelClass">Xpath Input</label> 
                             <CodeMirror
                              className="codeMirror"
+                             value = {this.state.InputTextarea}
                              options={{
                                 mode: 'xquery',
                                 theme: 'dracula',

@@ -2,6 +2,7 @@ import { concat, pad } from "lodash"
 import { Tipo, TipoPath, Predicado } from "../AST/Entorno"
 import { Camino } from "./axes"
 import { Literal, Nodo } from "./Expresiones"
+const { ErroresGlobal } = require('../AST/Global')
 
 
 class PostFix
@@ -130,7 +131,7 @@ export class CallFunction extends PostFix
         retorno = new Position(this.predicado,this.tipo).getValor(nodos)
         break;
       default:
-        //Retorno un error semantico
+        ErroresGlobal.push({Error:`No existe la funcion ${this.nombre}`,tipo:"Semantico",Linea:0,columna:0})
         break;
     }
     return retorno

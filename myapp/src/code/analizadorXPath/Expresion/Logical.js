@@ -1,4 +1,5 @@
-var {Tipo, ColisionLogical} = require("../AST/Entorno")
+var {Tipo, ColisionLogical, getTipoById} = require("../AST/Entorno")
+const { ErroresGlobal } = require('../AST/Global')
 const { Literal } = require("./Expresiones")
 //Funcion para el Or entre booleanos
 export class Logical
@@ -12,26 +13,18 @@ export class Logical
     
     getValor(Objetos)
     {
-        var retorno = []
+        var retornos = new Map()
 
         for (var obj of Objetos ){
             var valIzq = this.izquierdo.getValor([obj])
             var valDer = this.derecho.getValor([obj])
-
-            for (var izq of valIzq) {
-                var salir = false
-                for (var der of valDer){
-
-                    if (operar(izq,this.op,der)){
-                        retorno.push(obj)
-                        salir = true
-                        break
-                    }
-                }
-                if (salir) break
-            }
+            operar(retornos,this.op,valIzq,valDer,Objetos)
         }
-        return retorno
+        var temp = []
+        for (const iterator of retornos.values()) {
+            temp.push(iterator)
+        }
+        return temp
     }
 
     Graficar(ListaNodes,ListaEdges,contador)
@@ -51,18 +44,61 @@ export class Logical
     }
 }
 
-function operar(izq, op, der){
+function operar(objeto,op,izqValor,derValor,todos){
     var retorno = false
     // validar tipos
-    if (ColisionLogical[izq.tipo][der.tipo]){
-        switch(op){
-            case "and":
-                retorno =  izq.valor && der.valor
-                break;
-            case "or":
-                retorno = izq.valor || der.valor
-                break;
-        }   
+    switch(op){
+        case "and":
+            for (const izq of izqValor) {
+                for (const der of derValor) {
+                    if(izq.tipo==Tipo.NODO)
+                    {
+                        if(der.tipo==Tipo.NODO)
+                        {
+                            if(izq.entorno == der.entorno)
+                            {
+                                objeto.set(izq.entorno,izq)
+                                break
+                            }
+                            break
+                        }
+                        objeto.set(izq.entorno,izq)
+                        break
+                    }
+                    else if(der.tipo==Tipo.NODO)
+                    {
+                        objeto.set(izq.entorno,der)
+                        break
+                    }
+                    for (const iterator of todos) {
+                        objeto.set(iterator.entorno,iterator)
+                    }
+                    return
+                }
+            }
+            break
+        case "or":
+            for (const izq of izqValor) {
+                if(izq.tipo!=Tipo.NODO)
+                {
+                    for (const iterator of todos) {
+                        objeto.set(iterator.entorno,iterator)
+                    }
+                    return
+                }
+                objeto.set(izq.entorno,izq)
+            }
+            for (const der of derValor) {
+                if(der.tipo!=Tipo.NODO)
+                {
+                    for (const iterator of todos) {
+                        objeto.set(iterator.entorno,iterator)
+                    }
+                    return
+                }
+                objeto.set(der.entorno,der)
+            }
+            break
     }
     return retorno
 }
