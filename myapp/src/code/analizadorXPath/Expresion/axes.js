@@ -528,7 +528,7 @@ export class Ancestor extends Axes
       var ancestros=[]
       while  (nuevaPila.length>0) {
         var entorno = nuevaPila.pop()
-        if(entorno.tipo==this.nombre) ancestros.psuh(new Nodo(Tipo.NODO,entorno,nuevaPila,entorno.texto))
+        if(entorno.tipo==this.nombre) ancestros.push(new Nodo(Tipo.NODO,entorno,nuevaPila,entorno.texto))
         nuevaPila = (Object.assign([],nuevaPila))
       }
       ancestros = Predicado(this.predicado,ancestros)
@@ -582,12 +582,15 @@ export class AncestorSelf extends Axes
       }
       retorno = retorno.concat(new Ancestor(this.nombre,[],this.ABS).getValor([nodo]))
       retorno = Predicado(this.predicado,retorno)
+      for (const iterator of retorno) {
+        retornos.set(iterator.entorno,iterator) 
+      }
       if(this.tipo=TipoPath.REL)
       {
         for (const hijo of nodo.entorno.hijos) {     
           var nuevaPila = Object.assign([],nodo.pila)
           nuevaPila.push(nodo.entorno)
-          var retorno = new Ancestor(this.nombre,this.predicado,this.Tipo).getValor([new Nodo(Tipo.NODO,hijo,nuevaPila,hijo.texto)]) 
+          var retorno = new AncestorSelf(this.nombre,this.predicado,this.Tipo).getValor([new Nodo(Tipo.NODO,hijo,nuevaPila,hijo.texto)]) 
           for (const iterator of retorno) {
             retornos.set(iterator.entorno,iterator) 
           }
@@ -596,12 +599,12 @@ export class AncestorSelf extends Axes
     }
     var temp = []
     var posicion=1
-    for (const valor of retorno.values()) {
+    for (const valor of retornos.values()) {
       valor.posicion=posicion
       temp.push(valor)
       posicion++
     }
-    return retornos
+    return temp
   }
 
   Graficar(ListaNodes,ListaEdges,contador)
