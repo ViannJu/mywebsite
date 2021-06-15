@@ -119,9 +119,10 @@ class Navigation extends React.Component{
             console.log(funcion.errores)
         }
         var respuesta=funcion.Ejecutar(this.state.XML);
+        this.setState({OutputTextarea: respuesta});  
         var AST = funcion.Graficar();
         this.setState({AST:AST})
-        this.setState({OutputTextarea: respuesta});  
+        funcion.InvertirNodes()
         var datos = {nodes:funcion.Nodos,edges:funcion.Edges}   
         this.setState({datosCST:datos}) 
         this.setState({graphvizCST:funcion.graphviz})
