@@ -25,7 +25,7 @@ class InConsole extends React.Component{
         edges: {
             color: '#000000'
         },
-        interaction: { hoverEdges: true }
+        interaction: { hover: true }
     };
      
     events = {

@@ -117,22 +117,24 @@ export class Comando
   {
     var ListaNodes = []
     var ListaEdges = []
-    var contador = {num:0}
-    
+    var contador = {num:2}
+    ListaNodes.push({id:1,label:"AST"})
+    ListaEdges.push({from:1,to:2})
     var nodoActual = {id:contador.num,label:"XPath"}
     contador.num++
     ListaNodes.push(nodoActual)
     for(var i = 0; i < this.Instrucciones.length; i++)
     {
-      var nodos = this.Instrucciones[i].Graficar(ListaNodes,ListaEdges,contador)
+      var nodos = [] 
       if(i!=0)
       {
         ListaNodes.push({id:contador.num,label:"|"})
         nodos.push({id:contador.num,label:"|"})
         contador.num++
       }
+      nodos = nodos.concat(this.Instrucciones[i].Graficar(ListaNodes,ListaEdges,contador))
       for (const nodo of nodos) {
-        ListaEdges.unshift({from:nodoActual.id,to:nodo.id})
+        ListaEdges.push({from:nodoActual.id,to:nodo.id})
       }
     }
     return {nodes:ListaNodes,edges:ListaEdges}
